@@ -11,5 +11,9 @@ public class Main {
 
         conexao1.desconectar();
 
+        LoggerSistema.getInstance().log("Pedido criado com sucesso");
+        LoggerSistema.getInstance().log("Pagamento aprovado");
+        LoggerSistema.getInstance().log("Erro ao calcular frete");
+
     }
 }
