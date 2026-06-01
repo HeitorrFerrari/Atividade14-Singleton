@@ -2,7 +2,7 @@ public class ConfiguracaoSistema {
     private String url;
     private String nomeAplicacao;
     private String ambienteExecucao;
-    private String ApiKey;
+    private String apiKey;
 
     private static ConfiguracaoSistema configuracaoSistema = new ConfiguracaoSistema();
 
