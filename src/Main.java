@@ -1,5 +1,6 @@
 import exercicio3.*;
 import exercicio6.*;
+import exercicio7.*;
 
 public class Main {
 
@@ -8,7 +9,7 @@ public class Main {
         Notificador notificador = new Notificador();
 
         notificador.setStrategy(new EmailStrategy());
-        notificador.notificar("Pedido aprovado!", "maria@email.com");
+        notificador.notificar("Pedido aprovado!", "maria@gmail.com");
 
         notificador.setStrategy(new SmsStrategy());
         notificador.notificar("Pedido enviado!", "44999765300");
@@ -43,5 +44,20 @@ public class Main {
 
         contexto.setStrategy(new DescontoClienteVIP());
         System.out.printf("Cliente VIP    (20%% → limitado): R$ %.2f%n", contexto.aplicarDesconto(valor));
+
+        ProcessadorPagamento processador = new ProcessadorPagamento(new PixStrategy("maria@gmail.com"));
+        processador.executar(250.00);
+
+        processador.setStrategy(new CartaoCreditoStrategy("1234567890123456", 3));
+        processador.executar(250.00);
+
+        processador.setStrategy(new BoletoStrategy("123.456.789-00"));
+        processador.executar(250.00);
+
+        processador.setStrategy(new ValePresenteStrategy("VALE-6-XYZ", 100.00));
+        processador.executar(250.00);
+
+        processador.setStrategy(new ValePresenteStrategy("VALE-2026-ABC", 300.00));
+        processador.executar(250.00);
     }
 }
