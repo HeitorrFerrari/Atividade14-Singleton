@@ -3,6 +3,7 @@ import exercicio6.*;
 import exercicio7.*;
 import exercicio9.*;
 import exercicio10.*;
+import exercicio12.*;
 
 import java.util.List;
 import java.util.Map;
@@ -130,5 +131,19 @@ public class Main {
         sistema.setStrategy(new ProdutosSimilaresStrategy(referencia));
         System.out.println("=== Produtos Similares ao Mouse ===");
         sistema.recomendar(cliente, catalogo);
+
+        System.out.println("\n=== Exercício 12: Relatórios + Logger Singleton ===\n");
+
+        GeradorRelatorio gerador = new GeradorRelatorio(new RelatorioPDF());
+        gerador.gerar("Vendas de Janeiro");
+
+        gerador.setStrategy(new RelatorioCSV());
+        gerador.gerar("Clientes Ativos");
+
+        gerador.setStrategy(new RelatorioHTML());
+        gerador.gerar("Estoque Atual");
+
+        System.out.println("\n=== Histórico do Logger ===");
+        LoggerSistema.getInstancia().getLogs().forEach(System.out::println);
     }
 }
