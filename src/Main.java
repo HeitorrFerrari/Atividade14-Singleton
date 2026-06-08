@@ -1,4 +1,5 @@
 import exercicio3.*;
+import exercicio6.*;
 
 public class Main {
 
@@ -17,5 +18,30 @@ public class Main {
 
         notificador.setStrategy(new PushNotificationStrategy());
         notificador.notificar("Você recebeu uma nova promoção!", "Maria");
+
+        ConfiguracaoDesconto config = ConfiguracaoDesconto.getInstancia();
+        config.setDescontoMaximo(0.30);
+
+        double valor = 100.0;
+        CalculadoraDesconto contexto = new CalculadoraDesconto(new DescontoClienteComum());
+
+        System.out.println("Valor original: R$ " + valor);
+        System.out.println("─────────────────────────────");
+
+        contexto.setStrategy(new DescontoClienteComum());
+        System.out.printf("Cliente Comum  (5%%):  R$ %.2f%n", contexto.aplicarDesconto(valor));
+
+        contexto.setStrategy(new DescontoClienteVIP());
+        System.out.printf("Cliente VIP    (20%%): R$ %.2f%n", contexto.aplicarDesconto(valor));
+
+        contexto.setStrategy(new DescontoPromocional());
+        System.out.printf("Promocional    (50%%): R$ %.2f%n", contexto.aplicarDesconto(valor));
+
+        System.out.println("─────────────────────────────");
+        System.out.println("Alterando desconto máximo para 10%...");
+        config.setDescontoMaximo(0.10);
+
+        contexto.setStrategy(new DescontoClienteVIP());
+        System.out.printf("Cliente VIP    (20%% → limitado): R$ %.2f%n", contexto.aplicarDesconto(valor));
     }
 }
