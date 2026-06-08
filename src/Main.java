@@ -101,7 +101,7 @@ public class Main {
                 new Produto("Smartphone",    "Eletrônicos",  1500),
                 new Produto("Mouse","Eletrônicos",  750),
                 new Produto("Perfume", "Cosméticos",     620),
-                new Produto("Camiseta Dry",  "Roupas",     430),
+                new Produto("Camiseta",  "Roupas",     430),
                 new Produto("Hidratante",       "Cosméticos",     390),
                 new Produto("Serum",    "Cosméticos",       210),
                 new Produto("Sandália","Calçados",     180)
@@ -115,20 +115,20 @@ public class Main {
         sistema.recomendar(cliente, catalogo);
 
         Map<String, List<String>> historico = Map.of(
-                "Maria", List.of("Smartphone", "Notebook")
+                "Maria", List.of("Smartphone", "Mouse")
         );
         sistema.setStrategy(new HistoricoComprasStrategy(historico));
         System.out.println("=== Histórico de Compras ===");
         sistema.recomendar(cliente, catalogo);
 
-        Map<String, String> categorias = Map.of("Maria", "Esportes");
+        Map<String, String> categorias = Map.of("Maria", "Cosméticos");
         sistema.setStrategy(new CategoriaFavoritaStrategy(categorias));
         System.out.println("=== Categoria Favorita ===");
         sistema.recomendar(cliente, catalogo);
 
-        Produto referencia = new Produto("Notebook", "Eletrônicos", 0);
+        Produto referencia = new Produto("Mouse", "Eletrônicos", 0);
         sistema.setStrategy(new ProdutosSimilaresStrategy(referencia));
-        System.out.println("=== Produtos Similares ao Notebook ===");
+        System.out.println("=== Produtos Similares ao Mouse ===");
         sistema.recomendar(cliente, catalogo);
     }
 }
