@@ -1,7 +1,7 @@
 import exercicio3.*;
 import exercicio6.*;
 import exercicio7.*;
-
+import exercicio9.*;
 public class Main {
 
     public static void main(String[] args) {
@@ -59,5 +59,36 @@ public class Main {
 
         processador.setStrategy(new ValePresenteStrategy("VALE-2026-ABC", 300.00));
         processador.executar(250.00);
+
+        System.out.println("=== Programa de Fidelidade ===\n");
+
+        ProgramaFidelidade clienteComum = new ProgramaFidelidade("Ana", new ClienteComumStrategy());
+        clienteComum.registrarCompra(100.00);
+        clienteComum.registrarCompra(55.00);
+
+        System.out.println();
+
+        ProgramaFidelidade clientePrata = new ProgramaFidelidade("Joao", new ClientePrataStrategy());
+        clientePrata.registrarCompra(100.00);
+        clientePrata.registrarCompra(55.00);
+
+        System.out.println();
+
+        ProgramaFidelidade clienteOuro = new ProgramaFidelidade("Maria", new ClienteOuroStrategy());
+        clienteOuro.registrarCompra(100.00);
+        clienteOuro.registrarCompra(55.00);
+
+        System.out.println();
+
+        ProgramaFidelidade clienteDiamante = new ProgramaFidelidade("Julia", new ClienteDiamanteStrategy());
+        clienteDiamante.registrarCompra(300.00);
+        clienteDiamante.registrarCompra(600.00);
+
+        System.out.println();
+        System.out.println("=== Resumo Final ===");
+        System.out.println("Ana:    " + clienteComum.getPontosAcumulados() + " pontos");
+        System.out.println("Joao:  " + clientePrata.getPontosAcumulados() + " pontos");
+        System.out.println("Maria:  " + clienteOuro.getPontosAcumulados() + " pontos");
+        System.out.println("Julia:  " + clienteDiamante.getPontosAcumulados() + " pontos");
     }
 }
