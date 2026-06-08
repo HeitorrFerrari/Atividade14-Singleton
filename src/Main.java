@@ -2,6 +2,11 @@ import exercicio3.*;
 import exercicio6.*;
 import exercicio7.*;
 import exercicio9.*;
+import exercicio10.*;
+
+import java.util.List;
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -90,5 +95,40 @@ public class Main {
         System.out.println("Joao:  " + clientePrata.getPontosAcumulados() + " pontos");
         System.out.println("Maria:  " + clienteOuro.getPontosAcumulados() + " pontos");
         System.out.println("Julia:  " + clienteDiamante.getPontosAcumulados() + " pontos");
+
+        List<Produto> catalogo = List.of(
+                new Produto("Vestido",      "Roupas",  980),
+                new Produto("Smartphone",    "Eletrônicos",  1500),
+                new Produto("Mouse","Eletrônicos",  750),
+                new Produto("Perfume", "Cosméticos",     620),
+                new Produto("Camiseta Dry",  "Roupas",     430),
+                new Produto("Hidratante",       "Cosméticos",     390),
+                new Produto("Serum",    "Cosméticos",       210),
+                new Produto("Sandália","Calçados",     180)
+        );
+
+        String cliente = "Maria";
+
+        SistemaRecomendacao sistema = new SistemaRecomendacao(new MaisVendidosStrategy());
+
+        System.out.println("=== Mais Vendidos ===");
+        sistema.recomendar(cliente, catalogo);
+
+        Map<String, List<String>> historico = Map.of(
+                "Maria", List.of("Smartphone", "Notebook")
+        );
+        sistema.setStrategy(new HistoricoComprasStrategy(historico));
+        System.out.println("=== Histórico de Compras ===");
+        sistema.recomendar(cliente, catalogo);
+
+        Map<String, String> categorias = Map.of("Maria", "Esportes");
+        sistema.setStrategy(new CategoriaFavoritaStrategy(categorias));
+        System.out.println("=== Categoria Favorita ===");
+        sistema.recomendar(cliente, catalogo);
+
+        Produto referencia = new Produto("Notebook", "Eletrônicos", 0);
+        sistema.setStrategy(new ProdutosSimilaresStrategy(referencia));
+        System.out.println("=== Produtos Similares ao Notebook ===");
+        sistema.recomendar(cliente, catalogo);
     }
 }
